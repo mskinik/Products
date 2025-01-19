@@ -10,3 +10,13 @@ data class Checkout (
     val stock: Int?,
     val quantity: Int?,
 )
+
+fun Checkout.toProductDetail() = ProductDetail(
+    id = id,
+    title = title,
+    desc = desc,
+    price = price,
+    image = image,
+    stock = stock,
+    quantity = quantity
+)

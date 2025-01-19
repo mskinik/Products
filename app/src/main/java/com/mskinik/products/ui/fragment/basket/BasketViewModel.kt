@@ -1,9 +1,8 @@
-package com.mskinik.products.ui.fragment.favorite
+package com.mskinik.products.ui.fragment.basket
 
 import androidx.lifecycle.viewModelScope
 import com.mskinik.products.domain.model.ProductDetail
 import com.mskinik.products.domain.usecase.CheckoutUseCase
-import com.mskinik.products.domain.usecase.FavoriteUseCase
 import com.mskinik.products.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
@@ -12,32 +11,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(
-    private val favoriteUseCase: FavoriteUseCase,
+class BasketViewModel @Inject constructor(
     private val checkoutUseCase: CheckoutUseCase
-) :
-    BaseViewModel<FavoriteViewEvent, FavoriteViewState, FavoriteViewEffect>() {
-    override fun setInitialState(): FavoriteViewState = FavoriteViewState()
+): BaseViewModel<BasketEvent, BasketViewState, BasketEffect>() {
+    override fun setInitialState(): BasketViewState = BasketViewState()
 
-    override fun handleEvents(event: FavoriteViewEvent) {
+    override fun handleEvents(event: BasketEvent) {
         when (event) {
-            is FavoriteViewEvent.DeleteFavorite -> {
-                deleteFavorite(event.id)
+            is BasketEvent.NavigateToCheckout -> {
+                // do nothing
             }
-
-            is FavoriteViewEvent.DecreaseQuantity -> {
+            is BasketEvent.DeleteProductDetail -> {
+                deleteCheckout(event.productDetail)
+            }
+            is BasketEvent.DecreaseQuantity -> {
                 checkQuantity(event.productDetail)
             }
-
-            is FavoriteViewEvent.IncreaseQuantity -> {
+            is BasketEvent.IncreaseQuantity -> {
                 increaseQuantity(event.productDetail)
             }
-
-            is FavoriteViewEvent.AddToCart -> {
-                val productDetail = event.productDetail.copy(quantity = 1)
-                addToCart(productDetail)
-            }
-
             else -> {
                 // do nothing
             }
@@ -50,7 +42,7 @@ class FavoriteViewModel @Inject constructor(
 
     private fun getProducts() {
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteUseCase.getMyProducts().collect {
+            checkoutUseCase.getCheckouts().collect {
                 setState { copy(productDetailList = it.toImmutableList()) }
             }
         }
@@ -88,9 +80,4 @@ class FavoriteViewModel @Inject constructor(
         }
     }
 
-    private fun deleteFavorite(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            favoriteUseCase.deleteFavorite(id)
-        }
-    }
 }

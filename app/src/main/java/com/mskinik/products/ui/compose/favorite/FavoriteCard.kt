@@ -132,13 +132,13 @@ fun FavoriteCard(
                             IconButton(onClick = {
                                 onDecreaseClick(productDetail)
                             }) {
-                                Text("-")
+                                Text(text = stringResource(R.string.minus_sign))
                             }
                             Text(productDetail.quantity.toString(), fontSize = 16.sp)
                             IconButton(onClick = {
                                 onIncreaseClick(productDetail)
                             }) {
-                                Text("+")
+                                Text(text = stringResource(R.string.plus_sign))
                             }
                         }
                     }

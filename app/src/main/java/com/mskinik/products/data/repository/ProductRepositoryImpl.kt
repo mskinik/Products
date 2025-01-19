@@ -92,4 +92,8 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun decreaseQuantity(id: String) {
         productLocalDataSource.decreaseQuantity(id)
     }
+
+    override suspend fun getTotalQuantity(): Flow<Int?> {
+        return productLocalDataSource.getTotalQuantity()
+    }
 }

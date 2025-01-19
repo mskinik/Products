@@ -12,4 +12,10 @@
         android:orderInCategory="1"
         android:title="@string/menu_item_favorite"
         />
+    <item
+        android:id="@+id/basketFragment"
+        android:icon="@drawable/ic_cart"
+        android:orderInCategory="2"
+        android:title="@string/menu_item_cart"
+        />
 </menu>

@@ -11,4 +11,10 @@
     <string name="hint_phone">PHONE</string>
     <string name="pay">PAY</string>
     <string name="out_of_stock">Out of stock</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
+    <string name="price_title">Price:</string>
+    <string name="discount_titke">Discount:</string>
+    <string name="total_title">Total:</string>
+    <string name="checkout">CHECKOUT</string>
 </resources>

@@ -7,6 +7,7 @@ import com.mskinik.products.ui.base.State
 
 data class RootViewState(
     override val loading: Boolean = false,
+    val totalQuantity: Int? = 0,
 ) : State
 
 sealed interface RootEvent : Event {

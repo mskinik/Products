@@ -14,4 +14,5 @@ interface ProductLocalDataSource {
     suspend fun deleteCheckout(id: String): Int
     suspend fun increaseQuantity(id: String): Int
     suspend fun decreaseQuantity(id: String): Int
+    fun getTotalQuantity(): Flow<Int?>
 }

@@ -26,4 +26,7 @@ interface CheckoutDao {
 
     @Query("UPDATE checkoutentity SET quantity = quantity - 1 WHERE id = :id AND quantity > 1")
     suspend fun decreaseQuantity(id: Int): Int
+
+    @Query("SELECT SUM(quantity) FROM checkoutentity")
+    fun getTotalQuantity(): Flow<Int?>
 }

@@ -15,3 +15,7 @@ fun setImage(image: ImageView, url: String?, placeHolder: Drawable) {
         image.setImageDrawable(placeHolder)
     }
 }
+
+fun Int?.orZero(): Int = this ?: 0
+
+fun Double?.orZero(): Double = this ?: 0.0
