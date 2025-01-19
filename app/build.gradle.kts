@@ -82,4 +82,6 @@ dependencies {
     //navigation
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    //Glide
+    implementation (libs.glide)
 }
