@@ -15,12 +15,12 @@ data class CheckoutEntity(
     val quantity: Int?,
 )
 
-fun CheckoutEntity.toCheckout(): Checkout = Checkout(
-    id = id,
-    title = title,
-    desc = desc,
-    price = price,
-    image = image,
-    stock = stock,
-    quantity = quantity,
+fun CheckoutEntity?.toCheckout(): Checkout = Checkout(
+    id = this?.id,
+    title = this?.title,
+    desc = this?.desc,
+    price = this?.price,
+    image = this?.image,
+    stock = this?.stock,
+    quantity = this?.quantity,
 )

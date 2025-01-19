@@ -19,8 +19,8 @@ class RootViewModel @Inject constructor(private val checkoutUseCase: CheckoutUse
             RootEvent.NavigateToCheckout -> {
                 setEffect { RootEffect.NavigateToCheckout }
             }
-            else -> {
-
+            is RootEvent.NavigateToProductDetail -> {
+                setEffect { RootEffect.NavigateToProductDetail(event.id) }
             }
         }
     }

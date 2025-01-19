@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.mskinik.products.data.model.local.FavoriteEntity
 import com.mskinik.products.domain.model.ProductDetail
+import com.mskinik.util.orZero
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -21,7 +22,7 @@ fun FavoriteComposeView(
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-            items(productDetailList?.size ?: 0) { index ->
+            items(productDetailList?.size.orZero()) { index ->
                 productDetailList?.get(index)?.let { productDetail ->
                     FavoriteCard(
                         productDetail = productDetail,

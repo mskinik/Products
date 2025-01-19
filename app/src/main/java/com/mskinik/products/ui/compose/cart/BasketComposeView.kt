@@ -14,6 +14,7 @@ import com.mskinik.products.domain.model.ProductDetail
 import com.mskinik.products.ui.compose.cart.BasketCard
 import com.mskinik.products.ui.compose.cart.PriceSummary
 import com.mskinik.products.ui.fragment.basket.BasketViewState
+import com.mskinik.util.orZero
 
 @Composable
 fun BasketComposeView(
@@ -42,7 +43,7 @@ fun BasketComposeView(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        PriceSummary(basketViewState.totalPrice ?: 0.0)
+        PriceSummary(basketViewState.totalPrice.orZero())
 
         Spacer(modifier = Modifier.height(16.dp))
 

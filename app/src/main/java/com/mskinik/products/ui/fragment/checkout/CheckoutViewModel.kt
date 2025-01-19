@@ -1,6 +1,5 @@
 package com.mskinik.products.ui.fragment.checkout
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mskinik.products.domain.usecase.CheckoutUseCase
 import com.mskinik.products.ui.base.BaseViewModel
@@ -43,7 +42,6 @@ class CheckoutViewModel @Inject constructor(private val checkoutUseCase: Checkou
     private fun cleanCheckout() {
         viewModelScope.launch(Dispatchers.IO) {
             checkoutUseCase.deleteAllCheckouts().collect {
-                Log.d("TAG", "cleanCheckout: girdi1 it = $it")
                 setEffect { CheckoutViewEffect.NavigateToHome }
             }
         }

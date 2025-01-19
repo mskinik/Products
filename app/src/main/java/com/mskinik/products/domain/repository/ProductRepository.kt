@@ -26,4 +26,5 @@ interface ProductRepository {
     suspend fun increaseQuantity(id: String)
     suspend fun getTotalQuantity(): Flow<Int?>
     suspend fun deleteAllCheckouts(): Flow<Int>
+    suspend fun getCheckoutById(id: String): Flow<Checkout?>
 }

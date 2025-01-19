@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.androidx.navigation.safe.args)
 }
 
 android {
@@ -77,6 +78,7 @@ dependencies {
     //retrofit
     implementation(libs.retrofit)
     implementation (libs.converter.gson)
+    implementation (libs.retrofit2.adapter.rxjava3)
     //material
     implementation(libs.material)
     //navigation
@@ -91,5 +93,6 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    //safe-args
 
 }

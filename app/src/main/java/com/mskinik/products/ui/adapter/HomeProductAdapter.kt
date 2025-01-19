@@ -1,6 +1,5 @@
 package com.mskinik.products.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -15,8 +14,8 @@ import javax.inject.Inject
 
 @FragmentScoped
 class HomeProductAdapter @Inject constructor(): ListAdapter<Product, HomeProductAdapter.HomeViewHolder>(NewsListComparator()) {
-    private var onItemClickListener: (FavoriteEntity) -> Unit = {}
-    fun setClickListener(onItemClickListener: (FavoriteEntity) -> Unit) {
+    private var onItemClickListener: (String) -> Unit = {}
+    fun setClickListener(onItemClickListener: (String) -> Unit) {
         this.onItemClickListener = onItemClickListener
     }
 
@@ -38,11 +37,10 @@ class HomeProductAdapter @Inject constructor(): ListAdapter<Product, HomeProduct
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Product) = with(binding) {
             with(item) {
-                Log.d("TAG", "bind: girdi1 item: $item")
                 product = item
             }
             root.setOnClickListener {
-                item.id?.let { it1 -> onItemClickListener.invoke(item.toFavorite()) }
+                item.id?.let { it1 -> onItemClickListener.invoke(it1.toString()) }
             }
         }
     }

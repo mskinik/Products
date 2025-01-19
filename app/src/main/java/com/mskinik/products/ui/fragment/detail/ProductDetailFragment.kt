@@ -12,6 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mskinik.products.R
 import com.mskinik.products.databinding.FragmentProductDetailBinding
+import com.mskinik.products.ui.compose.applyComposeView
+import com.mskinik.products.ui.compose.detail.ProductDetailComposeView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,11 +37,14 @@ class ProductDetailFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect {
-                    with(binding) {
-                        tvName.text = it.product?.title
-                        tvDescription.text = it.product?.description
-                        tvPrice.text = it.product?.price.toString()
-                        tvDiscount.text = it.product?.discountPercentage.toString()
+                    binding.composeView.applyComposeView {
+                        ProductDetailComposeView(
+                            it,
+                            onFavoriteClick = { viewModel.setEvent(ProductDetailEvent.OnFavoriteClick )},
+                            onAddToCartClick = {viewModel.setEvent(ProductDetailEvent.AddToCart) },
+                            onDecreaseClick = {viewModel.setEvent(ProductDetailEvent.DecreaseQuantity) },
+                            onIncreaseClick = { viewModel.setEvent(ProductDetailEvent.IncreaseQuantity) }
+                        )
                     }
                 }
             }

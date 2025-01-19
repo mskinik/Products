@@ -1,7 +1,6 @@
 package com.mskinik.products.ui.fragment.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.mskinik.products.R
 import com.mskinik.products.databinding.FragmentHomeBinding
 import com.mskinik.products.ui.adapter.HomeProductAdapter
 import com.mskinik.products.ui.fragment.root.RootEvent
@@ -45,13 +42,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = homeProductAdapter
-        homeProductAdapter.setClickListener {
-            rootViewModel.setEvent(RootEvent.NavigateToCheckout)
+        homeProductAdapter.setClickListener { id ->
+            rootViewModel.setEvent(RootEvent.NavigateToProductDetail(id))
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect {
-                    Log.d("TAG", "onViewCreated: girdi1 it.productList.size: ${it.productList?.size}")
                     homeProductAdapter.submitList(it.productList)
                 }
             }

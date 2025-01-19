@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -64,7 +65,9 @@ fun FavoriteCard(
                     contentScale = ContentScale.Crop
                 )
                 IconButton(
-                    onClick = { onFavoriteClick(productDetail.id) },
+                    onClick = {
+                        productDetail.id?.let(onFavoriteClick)
+                        },
                     modifier = Modifier.align(Alignment.TopEnd)
                 ) {
                     Icon(
@@ -79,7 +82,9 @@ fun FavoriteCard(
 
             Text(
                 text = productDetail.title.orEmpty(),
-                style = MaterialTheme.typography.headlineSmall
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleLarge
 
             )
 
@@ -87,30 +92,32 @@ fun FavoriteCard(
 
             Text(
                 text = productDetail.desc.orEmpty(),
+                minLines = 2,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = productDetail.price.toString().orEmpty(),
-                style = MaterialTheme.typography.bodyLarge,
+                text = productDetail.price.toString().orEmpty() + " TL",
+                style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().height(60.dp),
                 horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
 
                 ) {
                 if (productDetail.stock == 0) {
                     Text(
                         modifier = Modifier.padding(end = 4.dp),
                         text = stringResource(R.string.out_of_stock),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = Color.Red
                     )
                 } else {
@@ -119,13 +126,10 @@ fun FavoriteCard(
                             onClick = {
                                 onAddToCartClick(productDetail)
                             }, modifier = Modifier
-                                .padding(4.dp)
+                                .padding(2.dp)
                                 .background(color = Color.White, shape = CircleShape)
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = "Add to cart"
-                            )
+                            Text(text = stringResource(R.string.plus_sign),fontSize = 24.sp)
                         }
                     } else {
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -156,7 +160,7 @@ fun ProductCardStockZeroPreview() {
         productDetail = ProductDetail(
             id = "1",
             title = "Macbook Pro",
-            price = 10000.0,
+            price = 10.50,
             image = "https://www.google.com",
             desc = "MacBook Pro 2021 MacBook Pro 2021 MacBook Pro 2021 MacBook Pro 2021 MacBook Pro 2021",
             stock = 0, quantity = 0

@@ -2,6 +2,7 @@ package com.mskinik.products.data.model.remote
 
 import com.google.gson.annotations.SerializedName
 import com.mskinik.products.domain.model.Product
+import com.mskinik.products.domain.model.ProductDetail
 
 data class ProductDTO(
     val availabilityStatus: String?,
@@ -46,4 +47,16 @@ fun ProductDTO.toProduct(): Product = Product(
     tags = tags,
     thumbnail = thumbnail,
     title = title,
+)
+
+fun ProductDTO.toProductDetail(): ProductDetail = ProductDetail(
+    id = id.toString(),
+    title = title,
+    desc = description,
+    price = price,
+    image = thumbnail,
+    stock = stock,
+    quantity = null,
+    brand = brand,
+    category = category,
 )

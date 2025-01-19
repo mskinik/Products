@@ -100,4 +100,8 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAllCheckouts(): Flow<Int> =
         flowOf(productLocalDataSource.deleteAllCheckouts())
+
+    override suspend fun getCheckoutById(id: String): Flow<Checkout?> {
+        return productLocalDataSource.getCheckoutById(id).map { it?.toCheckout() }
+    }
 }

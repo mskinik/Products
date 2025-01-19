@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_rootFragment_to_checkoutFragment"
             app:destination="@id/checkoutFragment" />
+        <action
+            android:id="@+id/action_rootFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkoutFragment"
@@ -19,5 +22,10 @@
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.mskinik.products.ui.fragment.detail.ProductDetailFragment"
-        android:label="ProductDetailFragment" />
+        android:label="ProductDetailFragment" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
 </navigation>

@@ -63,10 +63,9 @@ class RootFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.effect.collect { effect ->
                     when (effect) {
-                        RootEffect.NavigateToProductDetail -> {
-                            val navController = childFragmentManager
-                                .findFragmentById(R.id.fragment_container) as NavHostFragment
-                            navController.navController.navigate(R.id.checkoutFragment)
+                        is RootEffect.NavigateToProductDetail -> {
+                            val action = RootFragmentDirections.actionRootFragmentToProductDetailFragment(effect.id)
+                            findNavController().navigate(action)
                         }
 
                         RootEffect.NavigateToCheckout -> {

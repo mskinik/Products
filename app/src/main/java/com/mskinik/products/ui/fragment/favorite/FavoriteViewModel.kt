@@ -37,10 +37,6 @@ class FavoriteViewModel @Inject constructor(
                 val productDetail = event.productDetail.copy(quantity = 1)
                 addToCart(productDetail)
             }
-
-            else -> {
-                // do nothing
-            }
         }
     }
 
@@ -66,7 +62,9 @@ class FavoriteViewModel @Inject constructor(
 
     private fun increaseQuantity(productDetail: ProductDetail) {
         viewModelScope.launch(Dispatchers.IO) {
-            checkoutUseCase.increaseQuantity(productDetail.id)
+            productDetail.id?.let { id ->
+                checkoutUseCase.increaseQuantity(id)
+            }
         }
     }
 
@@ -78,13 +76,17 @@ class FavoriteViewModel @Inject constructor(
 
     private fun decreaseQuantity(productDetail: ProductDetail) {
         viewModelScope.launch(Dispatchers.IO) {
-            checkoutUseCase.decreaseQuantity(productDetail.id)
+            productDetail.id?.let { id ->
+                checkoutUseCase.decreaseQuantity(id)
+            }
         }
     }
 
     private fun deleteCheckout(productDetail: ProductDetail) {
         viewModelScope.launch(Dispatchers.IO) {
-            checkoutUseCase.deleteCheckout(productDetail.id)
+            productDetail.id?.let { id ->
+                checkoutUseCase.deleteCheckout(id)
+            }
         }
     }
 

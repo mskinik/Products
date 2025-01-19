@@ -2,7 +2,7 @@ package com.mskinik.products.domain.model
 
 
 data class Checkout (
-    val id: String,
+    val id: String?,
     val title: String?,
     val desc: String?,
     val price: Double?,

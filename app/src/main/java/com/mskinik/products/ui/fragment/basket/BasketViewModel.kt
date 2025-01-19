@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BasketViewModel @Inject constructor(
     private val checkoutUseCase: CheckoutUseCase
-): BaseViewModel<BasketEvent, BasketViewState, BasketEffect>() {
+) : BaseViewModel<BasketEvent, BasketViewState, BasketEffect>() {
     override fun setInitialState(): BasketViewState = BasketViewState()
 
     override fun handleEvents(event: BasketEvent) {
@@ -21,17 +21,17 @@ class BasketViewModel @Inject constructor(
             is BasketEvent.NavigateToCheckout -> {
                 // do nothing
             }
+
             is BasketEvent.DeleteProductDetail -> {
                 deleteCheckout(event.productDetail)
             }
+
             is BasketEvent.DecreaseQuantity -> {
                 checkQuantity(event.productDetail)
             }
+
             is BasketEvent.IncreaseQuantity -> {
                 increaseQuantity(event.productDetail)
-            }
-            else -> {
-                // do nothing
             }
         }
     }
@@ -58,7 +58,9 @@ class BasketViewModel @Inject constructor(
 
     private fun increaseQuantity(productDetail: ProductDetail) {
         viewModelScope.launch(Dispatchers.IO) {
-            checkoutUseCase.increaseQuantity(productDetail.id)
+            productDetail.id?.let { id ->
+                checkoutUseCase.increaseQuantity(id)
+            }
         }
     }
 
@@ -70,13 +72,17 @@ class BasketViewModel @Inject constructor(
 
     private fun decreaseQuantity(productDetail: ProductDetail) {
         viewModelScope.launch(Dispatchers.IO) {
-            checkoutUseCase.decreaseQuantity(productDetail.id)
+            productDetail.id?.let { id ->
+                checkoutUseCase.decreaseQuantity(id)
+            }
         }
     }
 
     private fun deleteCheckout(productDetail: ProductDetail) {
         viewModelScope.launch(Dispatchers.IO) {
-            checkoutUseCase.deleteCheckout(productDetail.id)
+            productDetail.id?.let { id ->
+                checkoutUseCase.deleteCheckout(id)
+            }
         }
     }
 

@@ -33,4 +33,7 @@ interface CheckoutDao {
     @Query("DELETE FROM checkoutentity")
     suspend fun deleteAllCheckouts(): Int
 
+    @Query("SELECT * FROM checkoutentity WHERE id = :id")
+    fun getCheckoutById(id: Int): Flow<CheckoutEntity?>
+
 }
