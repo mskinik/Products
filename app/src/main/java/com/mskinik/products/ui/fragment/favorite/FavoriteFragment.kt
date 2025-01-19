@@ -14,9 +14,10 @@ import com.mskinik.products.R
 import com.mskinik.products.databinding.FragmentFavoriteBinding
 import com.mskinik.products.ui.compose.applyComposeView
 import com.mskinik.products.ui.compose.favorite.FavoriteComposeView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
@@ -36,7 +37,9 @@ class FavoriteFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect {
                     binding.composeView.applyComposeView {
-                        FavoriteComposeView()
+                        FavoriteComposeView(it.favoriteList) {
+                            viewModel.setEvent(FavoriteViewEvent.DeleteFavorite(it))
+                        }
                     }
                 }
             }

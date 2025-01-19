@@ -1,7 +1,9 @@
 package com.mskinik.products.ui.fragment.home
 
 import androidx.lifecycle.viewModelScope
+import com.mskinik.products.data.model.local.Favorite
 import com.mskinik.products.data.network.Resource
+import com.mskinik.products.domain.usecase.FavoriteUseCase
 import com.mskinik.products.domain.usecase.GetProductUseCase
 import com.mskinik.products.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,18 +13,32 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val getProductUseCase: GetProductUseCase) :
+class HomeViewModel @Inject constructor(
+    private val getProductUseCase: GetProductUseCase,
+    private val favoriteUseCase: FavoriteUseCase
+) :
     BaseViewModel<HomeViewEvent, HomeViewState, HomeViewEffect>() {
     override fun setInitialState(): HomeViewState = HomeViewState()
 
     override fun handleEvents(event: HomeViewEvent) {
         when (event) {
-            else -> {}
+            is HomeViewEvent.NavigateToDetail -> navigateToDetail(event)
+            is HomeViewEvent.SetFavorite -> setFavorite(event.favorite)
         }
     }
 
+    private fun setFavorite(event: Favorite) {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoriteUseCase.addFavorite(event)
+        }
+    }
+
+    private fun navigateToDetail(event: HomeViewEvent.NavigateToDetail) {
+        TODO("Not yet implemented")
+    }
+
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getProductUseCase().collect { products ->
                 when (products) {
                     is Resource.Success -> {
@@ -32,9 +48,11 @@ class HomeViewModel @Inject constructor(private val getProductUseCase: GetProduc
                             )
                         }
                     }
+
                     is Resource.Fail -> {
                         //
                     }
+
                     is Resource.Error -> {
                         //
                     }

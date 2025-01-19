@@ -87,5 +87,9 @@ dependencies {
     //rx java
     implementation (libs.rxandroid)
     implementation (libs.rxjava)
+    //room
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
 
 }

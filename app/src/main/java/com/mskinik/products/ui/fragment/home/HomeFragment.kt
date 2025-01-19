@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = homeProductAdapter
         homeProductAdapter.setClickListener {
-
+            viewModel.setEvent(HomeViewEvent.SetFavorite(it))
         }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {

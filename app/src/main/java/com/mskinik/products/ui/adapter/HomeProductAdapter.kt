@@ -6,15 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mskinik.products.data.model.local.Favorite
 import com.mskinik.products.databinding.ItemHomeProductBinding
 import com.mskinik.products.domain.model.Product
+import com.mskinik.products.domain.model.toFavorite
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
 class HomeProductAdapter @Inject constructor(): ListAdapter<Product, HomeProductAdapter.HomeViewHolder>(NewsListComparator()) {
-    private var onItemClickListener: (Int) -> Unit = {}
-    fun setClickListener(onItemClickListener: (Int) -> Unit) {
+    private var onItemClickListener: (Favorite) -> Unit = {}
+    fun setClickListener(onItemClickListener: (Favorite) -> Unit) {
         this.onItemClickListener = onItemClickListener
     }
 
@@ -40,7 +42,7 @@ class HomeProductAdapter @Inject constructor(): ListAdapter<Product, HomeProduct
                 product = item
             }
             root.setOnClickListener {
-                item.id?.let { it1 -> onItemClickListener.invoke(it1) }
+                item.id?.let { it1 -> onItemClickListener.invoke(item.toFavorite()) }
             }
         }
     }

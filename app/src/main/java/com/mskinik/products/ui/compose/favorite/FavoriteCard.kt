@@ -26,12 +26,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.mskinik.products.data.model.local.Favorite
 
 @Composable
 fun FavoriteCard(
-    productName: String,
-    productPrice: String,
-    onFavoriteClick: () -> Unit,
+    favorite: Favorite,
+    onFavoriteClick: (id: String) -> Unit,
     onAddToCartClick: () -> Unit
 ) {
     Card(
@@ -49,15 +49,14 @@ fun FavoriteCard(
                     .background(Color.Gray),
             ) {
                 AsyncImage(
-                    model = "",
+                    model = favorite.image,
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.Blue)
                         .height(200.dp),
                     contentScale = ContentScale.Crop
                 )
-                IconButton(onClick = onFavoriteClick, modifier = Modifier.align(Alignment.TopEnd)) {
+                IconButton(onClick = {onFavoriteClick(favorite.id)} , modifier = Modifier.align(Alignment.TopEnd)) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
                         contentDescription = "Favori",
@@ -69,13 +68,13 @@ fun FavoriteCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = productName,
+                text = favorite.title.orEmpty(),
                 style = MaterialTheme.typography.headlineSmall
 
             )
 
             Text(
-                text = productPrice,
+                text = favorite.price.toString().orEmpty(),
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.Gray
             )
@@ -102,8 +101,12 @@ fun FavoriteCard(
 @Composable
 fun ProductCardPreview() {
     FavoriteCard(
-        productName = "Macbook Pro",
-        productPrice = "1749 TL",
+        favorite = Favorite(
+            id = "1",
+            title = "Macbook Pro",
+            price = 10000.0,
+            image = "https://www.google.com",
+            desc = "Macbook Pro 2021"),
         onFavoriteClick = { /* Favorilere ekleme işlemi */ },
         onAddToCartClick = { /* Sepete ekleme işlemi */ }
     )

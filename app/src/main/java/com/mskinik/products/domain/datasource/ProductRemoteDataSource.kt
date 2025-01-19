@@ -1,8 +1,7 @@
 package com.mskinik.products.domain.datasource
 
-import com.mskinik.products.data.model.ProductDTO
-import com.mskinik.products.data.model.ProductResponse
-import com.mskinik.products.data.network.Resource
+import com.mskinik.products.data.model.remote.ProductDTO
+import com.mskinik.products.data.model.remote.ProductResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 

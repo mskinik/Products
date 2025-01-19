@@ -1,4 +1,4 @@
-package com.mskinik.products.data.model
+package com.mskinik.products.data.model.remote
 
 data class DimensionsDTO(
     val depth: Double?,

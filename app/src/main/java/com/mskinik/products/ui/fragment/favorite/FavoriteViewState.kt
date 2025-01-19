@@ -1,5 +1,6 @@
 package com.mskinik.products.ui.fragment.favorite
 
+import com.mskinik.products.data.model.local.Favorite
 import com.mskinik.products.domain.model.Product
 import com.mskinik.products.ui.base.Effect
 import com.mskinik.products.ui.base.Event
@@ -9,11 +10,11 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class FavoriteViewState(
     override val loading: Boolean = false,
-    val productList: ImmutableList<Product>? = persistentListOf()
+    val favoriteList: ImmutableList<Favorite>? = persistentListOf()
 ) : State
 
 sealed interface FavoriteViewEvent : Event {
-
+    data class DeleteFavorite(val id: String) : FavoriteViewEvent
 }
 
 sealed interface FavoriteViewEffect : Effect {

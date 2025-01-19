@@ -1,4 +1,4 @@
-package com.mskinik.products.data.model
+package com.mskinik.products.data.model.remote
 
 import com.mskinik.products.domain.model.Meta
 
