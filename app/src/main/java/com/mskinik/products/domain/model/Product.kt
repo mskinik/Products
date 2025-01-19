@@ -23,7 +23,7 @@ data class Product(
 )
 
 fun Product.toFavorite(): FavoriteEntity = FavoriteEntity(
-    id = id.toString(),
+    id = id,
     title = title,
     desc = description,
     price = price,

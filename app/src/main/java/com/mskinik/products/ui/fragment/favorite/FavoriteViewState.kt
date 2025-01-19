@@ -15,7 +15,7 @@ data class FavoriteViewState(
 ) : State
 
 sealed interface FavoriteViewEvent : Event {
-    data class DeleteFavorite(val id: String) : FavoriteViewEvent
+    data class DeleteFavorite(val id: Int) : FavoriteViewEvent
     data class AddToCart(val productDetail: ProductDetail) : FavoriteViewEvent
     data class DecreaseQuantity(val productDetail: ProductDetail) : FavoriteViewEvent
     data class IncreaseQuantity(val productDetail: ProductDetail) : FavoriteViewEvent

@@ -2,7 +2,7 @@ package com.mskinik.products.domain.model
 
 
 data class Favorite (
-    val id: String,
+    val id: Int?,
     val title: String?,
     val desc: String?,
     val price: Double?,

@@ -15,7 +15,7 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun FavoriteComposeView(
     productDetailList: ImmutableList<ProductDetail>?,
-    onFavoriteClick: (id: String) -> Unit,
+    onFavoriteClick: (id: Int) -> Unit,
     onAddToCartClick: (ProductDetail) -> Unit,
     onDecreaseClick: (ProductDetail) -> Unit,
     onIncreaseClick: (ProductDetail) -> Unit,

@@ -83,7 +83,7 @@ fun BasketCard(
 fun PreviewBasketCard() {
     BasketCard(
         productDetail = ProductDetail(
-            id = "1",
+            id = 1,
             title = "Sample Product",
             price = 10.0,
             quantity = 1,

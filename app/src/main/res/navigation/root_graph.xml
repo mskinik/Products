@@ -25,7 +25,8 @@
         android:label="ProductDetailFragment" >
         <argument
             android:name="id"
-            app:argType="string"
-            app:nullable="true"/>
+            android:defaultValue="0"
+            app:argType="integer"
+            />
     </fragment>
 </navigation>

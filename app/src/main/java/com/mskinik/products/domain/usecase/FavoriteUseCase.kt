@@ -15,28 +15,9 @@ class FavoriteUseCase @Inject constructor(private val productRepository: Product
 
     suspend fun getFavorites() = productRepository.getFavorites()
 
-    suspend fun deleteFavorite(id: String) = productRepository.deleteFavorite(id)
+    suspend fun deleteFavorite(id: Int) = productRepository.deleteFavorite(id)
 
-    suspend fun isFavorite(id: String) = productRepository.isFavorite(id)
-
-    suspend fun clickFavorite(favoriteEntity: FavoriteEntity, isFavorite: Boolean): Flow<Boolean> {
-        return flow {
-            if (isFavorite) {
-                val result = deleteFavorite(favoriteEntity.id)
-                if (result != null && result.toInt() != 0) {
-                    emit(true)
-                } else {
-                    emit(false)
-                }
-            } else {
-                val result = addFavorite(favoriteEntity)
-                if (result != null && result.toInt() != -1) {
-                    emit(true)
-                } else
-                    emit(false)
-            }
-        }
-    }
+    suspend fun isFavorite(id: Int) = productRepository.isFavorite(id)
 
     suspend fun getMyProducts(): Flow<List<ProductDetail>> {
         val favoritesFlow = productRepository.getFavorites()

@@ -26,7 +26,7 @@ class ProductDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) :
     BaseViewModel<ProductDetailEvent, ProductDetailViewState, ProductDetailEffect>() {
-    private val productId: String? = savedStateHandle["id"]
+    private val productId: Int? = savedStateHandle["id"]
     override fun setInitialState(): ProductDetailViewState = ProductDetailViewState()
     private val compositeDisposable = CompositeDisposable()
 
@@ -70,12 +70,12 @@ class ProductDetailViewModel @Inject constructor(
         productId?.let {
             checkFavorite(it)
             getCheckoutById(it)
-            fetchProductDetail(it.toInt())
+            fetchProductDetail(it)
         }
 
     }
 
-    private fun checkFavorite(id: String) {
+    private fun checkFavorite(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteUseCase.isFavorite(id).collect {
                 setState {
@@ -96,7 +96,7 @@ class ProductDetailViewModel @Inject constructor(
                         setState {
                             with(resource) {
                                 copy(
-                                    id = data?.id.orZero().toString(),
+                                    id = data?.id,
                                     title = data?.title,
                                     desc = data?.description,
                                     price = data?.price,
@@ -186,7 +186,7 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    private fun getCheckoutById(id: String) {
+    private fun getCheckoutById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             checkoutUseCase.getCheckoutById(id).collect {
                 setState {

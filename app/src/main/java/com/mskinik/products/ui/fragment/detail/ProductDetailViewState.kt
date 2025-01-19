@@ -6,7 +6,7 @@ import com.mskinik.products.ui.base.State
 
 data class ProductDetailViewState(
     override val loading: Boolean = false,
-    val id: String? = null,
+    val id: Int? = null,
     val title: String? = null,
     val desc: String? = null,
     val price: Double? = null,

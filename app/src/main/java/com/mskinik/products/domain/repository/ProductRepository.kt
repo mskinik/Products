@@ -17,14 +17,14 @@ interface ProductRepository {
     fun getProductById(id: Int): Single<Resource<Product?>>
     suspend fun getFavorites(): Flow<List<Favorite>>
     suspend fun setFavorite(item: FavoriteEntity): Long
-    suspend fun deleteFavorite(id: String): Int
-    suspend fun isFavorite(id: String): Flow<Boolean>
+    suspend fun deleteFavorite(id: Int): Int
+    suspend fun isFavorite(id: Int): Flow<Boolean>
     suspend fun getCheckouts(): Flow<List<Checkout>>
     suspend fun addCheckout(productDetail: CheckoutEntity)
-    suspend fun deleteCheckout(id: String)
-    suspend fun decreaseQuantity(id: String)
-    suspend fun increaseQuantity(id: String)
+    suspend fun deleteCheckout(id: Int)
+    suspend fun decreaseQuantity(id: Int)
+    suspend fun increaseQuantity(id: Int)
     suspend fun getTotalQuantity(): Flow<Int?>
     suspend fun deleteAllCheckouts(): Flow<Int>
-    suspend fun getCheckoutById(id: String): Flow<Checkout?>
+    suspend fun getCheckoutById(id: Int): Flow<Checkout?>
 }

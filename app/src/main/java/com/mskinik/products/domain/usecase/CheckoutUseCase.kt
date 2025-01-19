@@ -12,15 +12,15 @@ class CheckoutUseCase @Inject constructor(private val productRepository: Product
         productRepository.addCheckout(productDetail.toCheckoutEntity())
     }
 
-    suspend fun deleteCheckout(id: String) {
+    suspend fun deleteCheckout(id: Int) {
         productRepository.deleteCheckout(id)
     }
 
-    suspend fun increaseQuantity(id: String) {
+    suspend fun increaseQuantity(id: Int) {
         productRepository.increaseQuantity(id)
     }
 
-    suspend fun decreaseQuantity(id: String) {
+    suspend fun decreaseQuantity(id: Int) {
         productRepository.decreaseQuantity(id)
     }
 
@@ -31,9 +31,7 @@ class CheckoutUseCase @Inject constructor(private val productRepository: Product
 
     suspend fun deleteAllCheckouts() = productRepository.deleteAllCheckouts()
 
-    suspend fun getCheckoutById(id: String) =
+    suspend fun getCheckoutById(id: Int) =
         productRepository.getCheckoutById(id).map { it?.toProductDetail() }
-
-    suspend fun getCheckoutByIdFlow(id: String) = productRepository.getCheckoutById(id)
 
 }

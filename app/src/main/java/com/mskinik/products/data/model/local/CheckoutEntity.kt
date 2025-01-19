@@ -6,7 +6,7 @@ import com.mskinik.products.domain.model.Checkout
 
 @Entity
 data class CheckoutEntity(
-    @PrimaryKey val id: String,
+    @PrimaryKey val id: Int?,
     val title: String?,
     val desc: String?,
     val price: Double?,

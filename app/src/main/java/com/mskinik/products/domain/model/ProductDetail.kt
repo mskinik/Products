@@ -1,9 +1,10 @@
 package com.mskinik.products.domain.model
 
 import com.mskinik.products.data.model.local.CheckoutEntity
+import com.mskinik.util.orZero
 
 data class ProductDetail(
-    val id: String?,
+    val id: Int?,
     val title: String?,
     val desc: String?,
     val price: Double?,
@@ -16,7 +17,7 @@ data class ProductDetail(
 
 fun ProductDetail.toCheckoutEntity(): CheckoutEntity {
     return CheckoutEntity(
-        id = id.orEmpty(),
+        id = id.orZero(),
         title = title,
         desc = desc,
         price = price,

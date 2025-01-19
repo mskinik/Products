@@ -58,11 +58,11 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun setFavorite(item: FavoriteEntity): Long =
         productLocalDataSource.addToFavorite(item)
 
-    override suspend fun deleteFavorite(id: String): Int {
+    override suspend fun deleteFavorite(id: Int): Int {
         return productLocalDataSource.deleteFavorite(id)
     }
 
-    override suspend fun isFavorite(id: String): Flow<Boolean> {
+    override suspend fun isFavorite(id: Int): Flow<Boolean> {
         return productLocalDataSource.isFavorite(id)
     }
 
@@ -82,15 +82,15 @@ class ProductRepositoryImpl @Inject constructor(
         productLocalDataSource.addCheckout(productDetail)
     }
 
-    override suspend fun deleteCheckout(id: String) {
+    override suspend fun deleteCheckout(id: Int) {
         productLocalDataSource.deleteCheckout(id)
     }
 
-    override suspend fun increaseQuantity(id: String) {
+    override suspend fun increaseQuantity(id: Int) {
         productLocalDataSource.increaseQuantity(id)
     }
 
-    override suspend fun decreaseQuantity(id: String) {
+    override suspend fun decreaseQuantity(id: Int) {
         productLocalDataSource.decreaseQuantity(id)
     }
 
@@ -101,7 +101,7 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun deleteAllCheckouts(): Flow<Int> =
         flowOf(productLocalDataSource.deleteAllCheckouts())
 
-    override suspend fun getCheckoutById(id: String): Flow<Checkout?> {
+    override suspend fun getCheckoutById(id: Int): Flow<Checkout?> {
         return productLocalDataSource.getCheckoutById(id).map { it?.toCheckout() }
     }
 }

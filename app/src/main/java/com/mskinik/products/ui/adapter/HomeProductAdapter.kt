@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 @FragmentScoped
 class HomeProductAdapter @Inject constructor(): ListAdapter<Product, HomeProductAdapter.HomeViewHolder>(NewsListComparator()) {
-    private var onItemClickListener: (String) -> Unit = {}
-    fun setClickListener(onItemClickListener: (String) -> Unit) {
+    private var onItemClickListener: (Int) -> Unit = {}
+    fun setClickListener(onItemClickListener: (Int) -> Unit) {
         this.onItemClickListener = onItemClickListener
     }
 
@@ -40,7 +40,7 @@ class HomeProductAdapter @Inject constructor(): ListAdapter<Product, HomeProduct
                 product = item
             }
             root.setOnClickListener {
-                item.id?.let { it1 -> onItemClickListener.invoke(it1.toString()) }
+                item.id?.let { it1 -> onItemClickListener.invoke(it1) }
             }
         }
     }

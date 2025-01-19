@@ -38,7 +38,7 @@ import com.mskinik.products.domain.model.ProductDetail
 @Composable
 fun FavoriteCard(
     productDetail: ProductDetail,
-    onFavoriteClick: (id: String) -> Unit,
+    onFavoriteClick: (id: Int) -> Unit,
     onAddToCartClick: (ProductDetail) -> Unit,
     onIncreaseClick: (ProductDetail) -> Unit,
     onDecreaseClick: (ProductDetail) -> Unit
@@ -158,7 +158,7 @@ fun FavoriteCard(
 fun ProductCardStockZeroPreview() {
     FavoriteCard(
         productDetail = ProductDetail(
-            id = "1",
+            id = 1,
             title = "Macbook Pro",
             price = 10.50,
             image = "https://www.google.com",
@@ -177,7 +177,7 @@ fun ProductCardStockZeroPreview() {
 fun ProductCardStockOnePreview() {
     FavoriteCard(
         productDetail = ProductDetail(
-            id = "1",
+            id = 1,
             title = "Macbook Pro",
             price = 10000.0,
             image = "https://www.google.com",

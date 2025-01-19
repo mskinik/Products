@@ -50,7 +50,7 @@ fun ProductDTO.toProduct(): Product = Product(
 )
 
 fun ProductDTO.toProductDetail(): ProductDetail = ProductDetail(
-    id = id.toString(),
+    id = id,
     title = title,
     desc = description,
     price = price,

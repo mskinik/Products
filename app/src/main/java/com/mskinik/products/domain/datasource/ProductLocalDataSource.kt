@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.Flow
 interface ProductLocalDataSource {
     suspend fun getFavorites(): Flow<List<FavoriteEntity>>
     suspend fun addToFavorite(favoriteEntity: FavoriteEntity): Long
-    suspend fun deleteFavorite(id: String): Int
-    suspend fun isFavorite(id: String): Flow<Boolean>
+    suspend fun deleteFavorite(id: Int): Int
+    suspend fun isFavorite(id: Int): Flow<Boolean>
     suspend fun getCheckouts(): Flow<List<CheckoutEntity>>
     suspend fun addCheckout(checkoutEntity: CheckoutEntity): Long
-    suspend fun deleteCheckout(id: String): Int
-    suspend fun increaseQuantity(id: String): Int
-    suspend fun decreaseQuantity(id: String): Int
+    suspend fun deleteCheckout(id: Int): Int
+    suspend fun increaseQuantity(id: Int): Int
+    suspend fun decreaseQuantity(id: Int): Int
     fun getTotalQuantity(): Flow<Int?>
-    fun getCheckoutById(id: String): Flow<CheckoutEntity?>
+    fun getCheckoutById(id: Int): Flow<CheckoutEntity?>
     suspend fun deleteAllCheckouts(): Int
 }

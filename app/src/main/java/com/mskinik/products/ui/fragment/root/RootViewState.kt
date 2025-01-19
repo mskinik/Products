@@ -12,10 +12,10 @@ data class RootViewState(
 
 sealed interface RootEvent : Event {
     data object NavigateToCheckout : RootEvent
-    data class NavigateToProductDetail(val id: String) : RootEvent
+    data class NavigateToProductDetail(val id: Int) : RootEvent
 }
 
 sealed interface RootEffect : Effect {
     data object NavigateToCheckout : RootEffect
-    data class NavigateToProductDetail(val id: String) : RootEffect
+    data class NavigateToProductDetail(val id: Int) : RootEffect
 }

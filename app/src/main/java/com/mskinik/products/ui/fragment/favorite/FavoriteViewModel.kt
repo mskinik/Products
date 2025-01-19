@@ -90,7 +90,7 @@ class FavoriteViewModel @Inject constructor(
         }
     }
 
-    private fun deleteFavorite(id: String) {
+    private fun deleteFavorite(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteUseCase.deleteFavorite(id)
         }
