@@ -16,6 +16,9 @@ class RootViewModel @Inject constructor(private val checkoutUseCase: CheckoutUse
 
     override fun handleEvents(event: RootEvent) {
         when (event) {
+            RootEvent.NavigateToCheckout -> {
+                setEffect { RootEffect.NavigateToCheckout }
+            }
             else -> {
 
             }

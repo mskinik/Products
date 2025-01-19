@@ -23,4 +23,5 @@ class ProductLocalDataSourceImpl @Inject constructor(
     override suspend fun increaseQuantity(id: String) = checkoutDao.increaseQuantity(id.toInt())
     override suspend fun decreaseQuantity(id: String) = checkoutDao.decreaseQuantity(id.toInt())
     override fun getTotalQuantity() = checkoutDao.getTotalQuantity()
+    override suspend fun deleteAllCheckouts() = checkoutDao.deleteAllCheckouts()
 }

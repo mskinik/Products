@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.mskinik.products.R
@@ -23,7 +24,7 @@ class RootFragment : Fragment() {
     private var _binding: FragmentRootBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<RootViewModel>()
+    private val viewModel by activityViewModels<RootViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +42,37 @@ class RootFragment : Fragment() {
         navController?.let {
             binding.bottomNav.setupWithNavController(it)
         }
+        collectState()
+        collectEffect()
+    }
+
+    private fun collectState() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect {
                     val bottomNavigationView = binding.bottomNav
                     val badge = bottomNavigationView.getOrCreateBadge(R.id.basketFragment)
                     updateBadge(badge, it.totalQuantity.orZero())
+                }
+            }
+        }
+    }
+
+    private fun collectEffect() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.effect.collect { effect ->
+                    when (effect) {
+                        RootEffect.NavigateToProductDetail -> {
+                            val navController = childFragmentManager
+                                .findFragmentById(R.id.fragment_container) as NavHostFragment
+                            navController.navController.navigate(R.id.checkoutFragment)
+                        }
+
+                        RootEffect.NavigateToCheckout -> {
+                            findNavController().navigate(R.id.action_rootFragment_to_checkoutFragment)
+                        }
+                    }
                 }
             }
         }

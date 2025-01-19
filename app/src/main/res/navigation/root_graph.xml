@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/rootFragment"
         android:name="com.mskinik.products.ui.fragment.root.RootFragment"
-        android:label="RootFragment" />
+        android:label="RootFragment" >
+        <action
+            android:id="@+id/action_rootFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.mskinik.products.ui.fragment.checkout.CheckoutFragment"
+        android:label="CheckoutFragment" />
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.mskinik.products.ui.fragment.detail.ProductDetailFragment"
+        android:label="ProductDetailFragment" />
 </navigation>

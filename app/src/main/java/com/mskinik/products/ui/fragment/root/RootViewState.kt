@@ -11,8 +11,11 @@ data class RootViewState(
 ) : State
 
 sealed interface RootEvent : Event {
-
+    data object NavigateToCheckout : RootEvent
+    data object NavigateToProductDetail : RootEvent
 }
 
 sealed interface RootEffect : Effect {
+    data object NavigateToCheckout : RootEffect
+    data object NavigateToProductDetail : RootEffect
 }

@@ -16,6 +16,7 @@ import com.mskinik.products.domain.repository.ProductRepository
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import retrofit2.Response
 import javax.inject.Inject
@@ -96,4 +97,7 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getTotalQuantity(): Flow<Int?> {
         return productLocalDataSource.getTotalQuantity()
     }
+
+    override suspend fun deleteAllCheckouts(): Flow<Int> =
+        flowOf(productLocalDataSource.deleteAllCheckouts())
 }

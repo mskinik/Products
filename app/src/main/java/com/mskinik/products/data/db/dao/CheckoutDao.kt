@@ -29,4 +29,8 @@ interface CheckoutDao {
 
     @Query("SELECT SUM(quantity) FROM checkoutentity")
     fun getTotalQuantity(): Flow<Int?>
+
+    @Query("DELETE FROM checkoutentity")
+    suspend fun deleteAllCheckouts(): Int
+
 }

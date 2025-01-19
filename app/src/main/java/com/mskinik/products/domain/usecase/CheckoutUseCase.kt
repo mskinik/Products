@@ -27,4 +27,6 @@ class CheckoutUseCase @Inject constructor(private val productRepository: Product
     suspend fun getCheckouts() = productRepository.getCheckouts().map { it.map { it.toProductDetail() } }
 
     suspend fun getTotalQuantity() = productRepository.getTotalQuantity()
+
+    suspend fun deleteAllCheckouts() = productRepository.deleteAllCheckouts()
 }
