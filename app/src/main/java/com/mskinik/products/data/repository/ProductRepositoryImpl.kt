@@ -1,16 +1,22 @@
 package com.mskinik.products.data.repository
 
-import com.mskinik.products.data.model.local.Favorite
+import com.mskinik.products.data.model.local.CheckoutEntity
+import com.mskinik.products.data.model.local.FavoriteEntity
+import com.mskinik.products.data.model.local.toCheckout
+import com.mskinik.products.data.model.local.toFavorite
 import com.mskinik.products.data.model.remote.ProductResponse
 import com.mskinik.products.data.model.remote.toProduct
 import com.mskinik.products.data.network.Resource
 import com.mskinik.products.domain.datasource.ProductLocalDataSource
 import com.mskinik.products.domain.datasource.ProductRemoteDataSource
+import com.mskinik.products.domain.model.Checkout
+import com.mskinik.products.domain.model.Favorite
 import com.mskinik.products.domain.model.Product
 import com.mskinik.products.domain.repository.ProductRepository
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -48,18 +54,42 @@ class ProductRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun setFavorite(item: Favorite): Long = productLocalDataSource.addToFavorite(item)
+    override suspend fun setFavorite(item: FavoriteEntity): Long =
+        productLocalDataSource.addToFavorite(item)
 
     override suspend fun deleteFavorite(id: String): Int {
-       return productLocalDataSource.deleteFavorite(id)
+        return productLocalDataSource.deleteFavorite(id)
     }
 
     override suspend fun isFavorite(id: String): Flow<Boolean> {
-       return productLocalDataSource.isFavorite(id)
+        return productLocalDataSource.isFavorite(id)
     }
 
     override suspend fun getFavorites(): Flow<List<Favorite>> {
-        return productLocalDataSource.getFavorites()
+        return productLocalDataSource.getFavorites().map { favorites ->
+            favorites.map { it.toFavorite() }
+        }
     }
 
+    override suspend fun getCheckouts(): Flow<List<Checkout>> {
+        return productLocalDataSource.getCheckouts().map { checkouts ->
+            checkouts.map { it.toCheckout() }
+        }
+    }
+
+    override suspend fun addCheckout(productDetail: CheckoutEntity) {
+        productLocalDataSource.addCheckout(productDetail)
+    }
+
+    override suspend fun deleteCheckout(id: String) {
+        productLocalDataSource.deleteCheckout(id)
+    }
+
+    override suspend fun increaseQuantity(id: String) {
+        productLocalDataSource.increaseQuantity(id)
+    }
+
+    override suspend fun decreaseQuantity(id: String) {
+        productLocalDataSource.decreaseQuantity(id)
+    }
 }

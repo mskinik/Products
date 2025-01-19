@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mskinik.products.data.model.local.Favorite
+import com.mskinik.products.data.model.local.FavoriteEntity
 import com.mskinik.products.databinding.ItemHomeProductBinding
 import com.mskinik.products.domain.model.Product
 import com.mskinik.products.domain.model.toFavorite
@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @FragmentScoped
 class HomeProductAdapter @Inject constructor(): ListAdapter<Product, HomeProductAdapter.HomeViewHolder>(NewsListComparator()) {
-    private var onItemClickListener: (Favorite) -> Unit = {}
-    fun setClickListener(onItemClickListener: (Favorite) -> Unit) {
+    private var onItemClickListener: (FavoriteEntity) -> Unit = {}
+    fun setClickListener(onItemClickListener: (FavoriteEntity) -> Unit) {
         this.onItemClickListener = onItemClickListener
     }
 

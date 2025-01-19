@@ -1,6 +1,6 @@
 package com.mskinik.products.domain.model
 
-import com.mskinik.products.data.model.local.Favorite
+import com.mskinik.products.data.model.local.FavoriteEntity
 
 data class Product(
     val availabilityStatus: String?,
@@ -22,10 +22,11 @@ data class Product(
     val title: String?,
 )
 
-fun Product.toFavorite(): Favorite = Favorite(
+fun Product.toFavorite(): FavoriteEntity = FavoriteEntity(
     id = id.toString(),
     title = title,
     desc = description,
     price = price,
     image = thumbnail.orEmpty(),
+    stock = stock,
 )

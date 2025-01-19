@@ -1,7 +1,7 @@
 package com.mskinik.products.ui.fragment.home
 
 import androidx.lifecycle.viewModelScope
-import com.mskinik.products.data.model.local.Favorite
+import com.mskinik.products.data.model.local.FavoriteEntity
 import com.mskinik.products.data.network.Resource
 import com.mskinik.products.domain.usecase.FavoriteUseCase
 import com.mskinik.products.domain.usecase.GetProductUseCase
@@ -23,11 +23,11 @@ class HomeViewModel @Inject constructor(
     override fun handleEvents(event: HomeViewEvent) {
         when (event) {
             is HomeViewEvent.NavigateToDetail -> navigateToDetail(event)
-            is HomeViewEvent.SetFavorite -> setFavorite(event.favorite)
+            is HomeViewEvent.SetFavorite -> setFavorite(event.favoriteEntity)
         }
     }
 
-    private fun setFavorite(event: Favorite) {
+    private fun setFavorite(event: FavoriteEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteUseCase.addFavorite(event)
         }

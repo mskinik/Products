@@ -1,6 +1,8 @@
 package com.mskinik.products.ui.fragment.favorite
 
 import androidx.lifecycle.viewModelScope
+import com.mskinik.products.domain.model.ProductDetail
+import com.mskinik.products.domain.usecase.CheckoutUseCase
 import com.mskinik.products.domain.usecase.FavoriteUseCase
 import com.mskinik.products.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,7 +12,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(private val favoriteUseCase: FavoriteUseCase) :
+class FavoriteViewModel @Inject constructor(
+    private val favoriteUseCase: FavoriteUseCase,
+    private val checkoutUseCase: CheckoutUseCase
+) :
     BaseViewModel<FavoriteViewEvent, FavoriteViewState, FavoriteViewEffect>() {
     override fun setInitialState(): FavoriteViewState = FavoriteViewState()
 
@@ -19,21 +24,71 @@ class FavoriteViewModel @Inject constructor(private val favoriteUseCase: Favorit
             is FavoriteViewEvent.DeleteFavorite -> {
                 deleteFavorite(event.id)
             }
+
+            is FavoriteViewEvent.DecreaseQuantity -> {
+                checkQuantity(event.productDetail)
+            }
+
+            is FavoriteViewEvent.IncreaseQuantity -> {
+                increaseQuantity(event.productDetail)
+            }
+
+            is FavoriteViewEvent.AddToCart -> {
+                val productDetail = event.productDetail.copy(quantity = 1)
+                addToCart(productDetail)
+            }
+
             else -> {
                 // do nothing
             }
         }
     }
 
+    private fun checkQuantity(productDetail: ProductDetail) {
+        if (productDetail.quantity == 1) {
+            deleteCheckout(productDetail)
+        } else {
+            decreaseQuantity(productDetail)
+        }
+    }
+
+    private fun increaseQuantity(productDetail: ProductDetail) {
+        viewModelScope.launch(Dispatchers.IO) {
+            checkoutUseCase.increaseQuantity(productDetail.id)
+        }
+    }
+
+    private fun addToCart(productDetail: ProductDetail) {
+        viewModelScope.launch(Dispatchers.IO) {
+            checkoutUseCase.addCheckout(productDetail)
+        }
+    }
+
+    private fun decreaseQuantity(productDetail: ProductDetail) {
+        viewModelScope.launch(Dispatchers.IO) {
+            checkoutUseCase.decreaseQuantity(productDetail.id)
+        }
+    }
+
+    private fun deleteCheckout(productDetail: ProductDetail) {
+        viewModelScope.launch(Dispatchers.IO) {
+            checkoutUseCase.deleteCheckout(productDetail.id)
+        }
+    }
+
     init {
-        viewModelScope.launch {
-            favoriteUseCase.getFavorites().collect{
-                setState { copy(favoriteList = it.toImmutableList()) }
+        getProducts()
+    }
+
+    private fun getProducts() {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoriteUseCase.getMyProducts().collect {
+                setState { copy(productDetailList = it.toImmutableList()) }
             }
         }
     }
 
-    fun deleteFavorite(id: String) {
+    private fun deleteFavorite(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteUseCase.deleteFavorite(id)
         }

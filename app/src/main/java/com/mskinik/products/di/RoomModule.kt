@@ -26,4 +26,8 @@ object RoomModule {
     @Provides
     @Singleton
     fun provideFavoritesDao(db: AppDatabase) = db.favoritesDao
+
+    @Provides
+    @Singleton
+    fun provideCheckoutDao(db: AppDatabase) = db.checkoutsDao
 }

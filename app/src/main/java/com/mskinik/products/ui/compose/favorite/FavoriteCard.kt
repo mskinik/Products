@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
@@ -23,16 +24,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.mskinik.products.data.model.local.Favorite
+import com.mskinik.products.R
+import com.mskinik.products.data.model.local.FavoriteEntity
+import com.mskinik.products.domain.model.ProductDetail
 
 @Composable
 fun FavoriteCard(
-    favorite: Favorite,
+    productDetail: ProductDetail,
     onFavoriteClick: (id: String) -> Unit,
-    onAddToCartClick: () -> Unit
+    onAddToCartClick: (ProductDetail) -> Unit,
+    onIncreaseClick: (ProductDetail) -> Unit,
+    onDecreaseClick: (ProductDetail) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -40,8 +48,7 @@ fun FavoriteCard(
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column(
-        ) {
+        Column() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -49,17 +56,20 @@ fun FavoriteCard(
                     .background(Color.Gray),
             ) {
                 AsyncImage(
-                    model = favorite.image,
+                    model = productDetail.image,
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp),
                     contentScale = ContentScale.Crop
                 )
-                IconButton(onClick = {onFavoriteClick(favorite.id)} , modifier = Modifier.align(Alignment.TopEnd)) {
+                IconButton(
+                    onClick = { onFavoriteClick(productDetail.id) },
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
-                        contentDescription = "Favori",
+                        contentDescription = "Favorite",
                         tint = Color.Red
                     )
                 }
@@ -68,13 +78,23 @@ fun FavoriteCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = favorite.title.orEmpty(),
+                text = productDetail.title.orEmpty(),
                 style = MaterialTheme.typography.headlineSmall
 
             )
 
+            Spacer(modifier = Modifier.height(4.dp))
+
             Text(
-                text = favorite.price.toString().orEmpty(),
+                text = productDetail.desc.orEmpty(),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleLarge,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = productDetail.price.toString().orEmpty(),
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.Gray
             )
@@ -85,29 +105,84 @@ fun FavoriteCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
 
-            ) {
-                IconButton(onClick = onAddToCartClick) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Sepete Ekle"
+                ) {
+                if (productDetail.stock == 0) {
+                    Text(
+                        modifier = Modifier.padding(end = 4.dp),
+                        text = stringResource(R.string.out_of_stock),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.Red
                     )
+                } else {
+                    if (productDetail.quantity == null || productDetail.quantity == 0) {
+                        IconButton(
+                            onClick = {
+                                onAddToCartClick(productDetail)
+                            }, modifier = Modifier
+                                .padding(4.dp)
+                                .background(color = Color.White, shape = CircleShape)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Add to cart"
+                            )
+                        }
+                    } else {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(onClick = {
+                                onDecreaseClick(productDetail)
+                            }) {
+                                Text("-")
+                            }
+                            Text(productDetail.quantity.toString(), fontSize = 16.sp)
+                            IconButton(onClick = {
+                                onIncreaseClick(productDetail)
+                            }) {
+                                Text("+")
+                            }
+                        }
+                    }
+
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun ProductCardPreview() {
+@Preview(showBackground = true, name = "Favorite Card Stock 0 Preview")
+fun ProductCardStockZeroPreview() {
     FavoriteCard(
-        favorite = Favorite(
+        productDetail = ProductDetail(
             id = "1",
             title = "Macbook Pro",
             price = 10000.0,
             image = "https://www.google.com",
-            desc = "Macbook Pro 2021"),
-        onFavoriteClick = { /* Favorilere ekleme işlemi */ },
-        onAddToCartClick = { /* Sepete ekleme işlemi */ }
+            desc = "MacBook Pro 2021 MacBook Pro 2021 MacBook Pro 2021 MacBook Pro 2021 MacBook Pro 2021",
+            stock = 0, quantity = 0
+        ),
+        onFavoriteClick = { },
+        onAddToCartClick = { },
+        onIncreaseClick = { },
+        onDecreaseClick = { }
+    )
+}
+
+@Preview(showBackground = true, name = "Favorite Card Stock 1 Preview")
+@Composable
+fun ProductCardStockOnePreview() {
+    FavoriteCard(
+        productDetail = ProductDetail(
+            id = "1",
+            title = "Macbook Pro",
+            price = 10000.0,
+            image = "https://www.google.com",
+            desc = "Macbook Pro 2021",
+            stock = 1, quantity = 0
+        ),
+        onFavoriteClick = { },
+        onAddToCartClick = { },
+        onIncreaseClick = { },
+        onDecreaseClick = { }
     )
 }
