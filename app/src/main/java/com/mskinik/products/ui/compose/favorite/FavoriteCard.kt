@@ -1,4 +1,4 @@
-package com.mskinik.products.ui.compose
+package com.mskinik.products.ui.compose.favorite
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

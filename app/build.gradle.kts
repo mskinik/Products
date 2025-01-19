@@ -84,4 +84,8 @@ dependencies {
     implementation(libs.androidx.navigation.ui)
     //Glide
     implementation (libs.glide)
+    //rx java
+    implementation (libs.rxandroid)
+    implementation (libs.rxjava)
+
 }

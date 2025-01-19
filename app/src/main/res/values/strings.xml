@@ -5,4 +5,9 @@
     <string name="menu_item_favorite">Favorite</string>
     <string name="menu_item_cart">Cart</string>
     <string name="menu_item_home">Home</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="hint_name">NAME</string>
+    <string name="hint_email">EMAIL</string>
+    <string name="hint_phone">PHONE</string>
+    <string name="pay">PAY</string>
 </resources>

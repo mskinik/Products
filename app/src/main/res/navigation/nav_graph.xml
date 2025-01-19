@@ -8,4 +8,8 @@
         android:id="@+id/homeFragment"
         android:name="com.mskinik.products.ui.fragment.home.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.mskinik.products.ui.fragment.favorite.FavoriteFragment"
+        android:label="FavoriteFragment" />
 </navigation>
