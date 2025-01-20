@@ -24,7 +24,9 @@ sealed interface ProductDetailEvent : Event {
     data object DecreaseQuantity : ProductDetailEvent
     data object IncreaseQuantity : ProductDetailEvent
     data object AddToCart : ProductDetailEvent
+    data object OnBackClicked : ProductDetailEvent
 }
 
 sealed interface ProductDetailEffect : Effect {
+    data object Back : ProductDetailEffect
 }

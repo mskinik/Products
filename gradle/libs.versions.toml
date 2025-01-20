@@ -1,11 +1,13 @@
 [versions]
 agp = "8.7.3"
+coreTesting = "2.1.0"
 glide = "4.16.0"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
+kotlinxCoroutinesTest = "1.6.4"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
 composeBom = "2024.04.01"
@@ -14,6 +16,7 @@ coilCompose = "3.0.4"
 gson = "2.11.0"
 kotlinxCollectionsImmutable = "0.3.8"
 androidxNavigationSafeargsGradlePlugin = "2.7.7"
+mockk = "1.9.3"
 retrofit = "2.11.0"
 material = "1.11.0"
 navigationFragment = "2.8.5"
@@ -24,6 +27,7 @@ roomCompiler = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -46,6 +50,8 @@ coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigationFragment" }

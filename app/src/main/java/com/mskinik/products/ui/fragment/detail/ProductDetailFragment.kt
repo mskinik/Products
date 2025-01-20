@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.mskinik.products.R
 import com.mskinik.products.databinding.FragmentProductDetailBinding
 import com.mskinik.products.ui.compose.applyComposeView
@@ -34,6 +35,12 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        collectState()
+        collectEffect()
+
+    }
+
+    private fun collectState() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect {
@@ -43,8 +50,23 @@ class ProductDetailFragment : Fragment() {
                             onFavoriteClick = { viewModel.setEvent(ProductDetailEvent.OnFavoriteClick )},
                             onAddToCartClick = {viewModel.setEvent(ProductDetailEvent.AddToCart) },
                             onDecreaseClick = {viewModel.setEvent(ProductDetailEvent.DecreaseQuantity) },
-                            onIncreaseClick = { viewModel.setEvent(ProductDetailEvent.IncreaseQuantity) }
+                            onIncreaseClick = { viewModel.setEvent(ProductDetailEvent.IncreaseQuantity) },
+                            onBackClick = { viewModel.setEvent(ProductDetailEvent.OnBackClicked) }
                         )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun collectEffect() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.effect.collect {
+                    when (it) {
+                        is ProductDetailEffect.Back -> {
+                            findNavController().popBackStack()
+                        }
                     }
                 }
             }

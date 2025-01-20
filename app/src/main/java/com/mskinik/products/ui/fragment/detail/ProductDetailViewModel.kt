@@ -47,6 +47,9 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailEvent.AddToCart -> {
                 addToCart()
             }
+            is ProductDetailEvent.OnBackClicked -> {
+                setEffect { ProductDetailEffect.Back }
+            }
         }
     }
 

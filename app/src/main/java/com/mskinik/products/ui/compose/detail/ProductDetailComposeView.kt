@@ -1,6 +1,7 @@
 package com.mskinik.products.ui.compose.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ fun ProductDetailComposeView(
     onAddToCartClick: () -> Unit,
     onDecreaseClick: () -> Unit,
     onIncreaseClick: () -> Unit,
+    onBackClick: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -52,15 +54,19 @@ fun ProductDetailComposeView(
                     .fillMaxWidth()
                     .height(200.dp),
             )
-            productDetailViewState.discount?.takeIf { it != 0.0 }?.let { discount ->
-                DiscountBadge(discount)
-            }
+            Back(onBackClick)
             Box(
                 modifier = Modifier
                     .fillMaxWidth(),
                 contentAlignment = Alignment.TopEnd
             ) {
-                FavoriteIcon(onFavoriteClick, productDetailViewState.isFavorite)
+                Column {
+                    FavoriteIcon(onFavoriteClick, productDetailViewState.isFavorite)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    productDetailViewState.discount?.takeIf { it != 0.0 }?.let { discount ->
+                        DiscountBadge(discount)
+                    }
+                }
             }
         }
 
@@ -152,7 +158,7 @@ fun DiscountBadge(discount: Double) {
     Box(
         modifier = Modifier
             .padding(8.dp)
-            .background(Color.Red, shape = CircleShape)
+            .background(Color.Blue, shape = CircleShape)
             .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -162,6 +168,21 @@ fun DiscountBadge(discount: Double) {
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold
         )
+    }
+}
+
+@Composable
+fun Back(onBackClick: () -> Unit) {
+    Box(
+        contentAlignment = Alignment.Center
+    ) {
+        IconButton(onClick = onBackClick) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
+                contentDescription = "Back Icon",
+            )
+        }
+
     }
 }
 
@@ -197,6 +218,7 @@ fun ProductDetailComposeViewPreview() {
         onFavoriteClick = {},
         onAddToCartClick = {},
         onDecreaseClick = {},
-        onIncreaseClick = {}
+        onIncreaseClick = {},
+        onBackClick = {}
     )
 }

@@ -59,6 +59,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
+    testImplementation (libs.mockk)
+    testImplementation (libs.androidx.core.testing)
+    testImplementation (libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -93,6 +96,5 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    //safe-args
 
 }

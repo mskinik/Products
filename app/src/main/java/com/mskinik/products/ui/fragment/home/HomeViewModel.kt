@@ -123,47 +123,4 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
-    /*
-    private fun sortProductsByPriceAscending() {
-        viewModelScope.launch {
-            val sortedList =
-                getCurrentState().filteredProductList?.sortedBy { it.price }?.toImmutableList()
-            setState {
-                copy(filteredProductList = sortedList, sorting = Sorting.ASCENDING)
-            }
-        }
-    }
-
-    private fun sortProductsByPriceDescending() {
-        viewModelScope.launch {
-            val sortedList = getCurrentState().filteredProductList?.sortedByDescending { it.price }
-                ?.toImmutableList()
-            setState {
-                copy(filteredProductList = sortedList, sorting = Sorting.DESCENDING)
-            }
-        }
-    }
-
-    private fun filterWeight(minWeight: Int) {
-        viewModelScope.launch {
-            val sortedList =
-                getCurrentState().filteredProductList?.filter { it.weight.orZero() > minWeight }
-                    ?.toImmutableList()
-            setState {
-                copy(filteredProductList = sortedList, sorting = Sorting.DESCENDING)
-            }
-        }
-    }
-
-    private fun filterStock(minStock: Int) {
-        viewModelScope.launch {
-            val sortedList =
-                getCurrentState().filteredProductList?.filter { it.stock.orZero() > minStock }
-                    ?.toImmutableList()
-            setState {
-                copy(filteredProductList = sortedList, sorting = Sorting.DESCENDING)
-            }
-        }
-    } */
 }

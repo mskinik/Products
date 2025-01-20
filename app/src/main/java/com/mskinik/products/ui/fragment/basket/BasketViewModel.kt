@@ -64,12 +64,6 @@ class BasketViewModel @Inject constructor(
         }
     }
 
-    private fun addToCart(productDetail: ProductDetail) {
-        viewModelScope.launch(Dispatchers.IO) {
-            checkoutUseCase.addCheckout(productDetail)
-        }
-    }
-
     private fun decreaseQuantity(productDetail: ProductDetail) {
         viewModelScope.launch(Dispatchers.IO) {
             productDetail.id?.let { id ->
