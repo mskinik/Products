@@ -52,5 +52,4 @@ class NewsListComparator : DiffUtil.ItemCallback<Product>() {
 
     override fun areContentsTheSame(oldProduct: Product, newProduct: Product): Boolean =
         oldProduct == newProduct
-
 }

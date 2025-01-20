@@ -47,6 +47,7 @@ fun ProductDTO.toProduct(): Product = Product(
     tags = tags,
     thumbnail = thumbnail,
     title = title,
+    weight = weight,
 )
 
 fun ProductDTO.toProductDetail(): ProductDetail = ProductDetail(

@@ -1,63 +1,169 @@
 package com.mskinik.products.ui.fragment.home
 
 import androidx.lifecycle.viewModelScope
-import com.mskinik.products.data.model.local.FavoriteEntity
 import com.mskinik.products.data.network.Resource
-import com.mskinik.products.domain.usecase.FavoriteUseCase
 import com.mskinik.products.domain.usecase.GetProductUseCase
 import com.mskinik.products.ui.base.BaseViewModel
+import com.mskinik.util.orZero
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getProductUseCase: GetProductUseCase,
-    private val favoriteUseCase: FavoriteUseCase
+    private val getProductUseCase: GetProductUseCase
 ) :
     BaseViewModel<HomeViewEvent, HomeViewState, HomeViewEffect>() {
     override fun setInitialState(): HomeViewState = HomeViewState()
 
     override fun handleEvents(event: HomeViewEvent) {
         when (event) {
-            is HomeViewEvent.NavigateToDetail -> navigateToDetail(event)
-            is HomeViewEvent.SetFavorite -> setFavorite(event.favoriteEntity)
-        }
-    }
+            is HomeViewEvent.OnSearchTextChanged -> {
+                setState { copy(searchText = event.search) }
+                searchProducts()
+            }
 
-    private fun setFavorite(event: FavoriteEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            favoriteUseCase.addFavorite(event)
-        }
-    }
+            is HomeViewEvent.OnSortClicked -> {
+                handleSorting()
+                searchProducts()
+            }
 
-    private fun navigateToDetail(event: HomeViewEvent.NavigateToDetail) {
-        TODO("Not yet implemented")
+            is HomeViewEvent.OnStockFilterChanged -> {
+                setState {
+                    copy(minStock = if (event.minStock == 0) null else event.minStock)
+                }
+                searchProducts()
+            }
+
+            is HomeViewEvent.OnWeightFilterChanged -> {
+                setState {
+                    copy(minWeight = if (event.minWeight == 0) null else event.minWeight)
+                }
+                searchProducts()
+            }
+        }
     }
 
     init {
+        getProducts()
+    }
+
+    private fun getProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             getProductUseCase().collect { products ->
                 when (products) {
                     is Resource.Success -> {
                         setState {
                             copy(
-                                productList = products.data?.toImmutableList()
+                                productList = products.data?.toImmutableList(),
+                                filteredProductList = products.data?.toImmutableList()
                             )
                         }
                     }
 
                     is Resource.Fail -> {
-                        //
+                        // do not nothing for now
                     }
 
                     is Resource.Error -> {
-                        //
+                        // do not nothing for now
                     }
                 }
             }
         }
     }
+
+    private fun searchProducts() {
+        viewModelScope.launch {
+            val filteredList = getCurrentState().productList?.filter { product ->
+                product.title?.contains(getCurrentState().searchText.orEmpty(), ignoreCase = true) == true
+            }?.toImmutableList()
+            if (getCurrentState().sorting != null) {
+                if (getCurrentState().sorting == Sorting.ASCENDING) {
+                    val sortedList = filteredList?.sortedBy { it.price }?.toImmutableList()
+                    setState {
+                        copy(filteredProductList = sortedList?.filter { it.weight.orZero() > getCurrentState().minWeight.orZero() && it.stock.orZero() > getCurrentState().minStock.orZero() }
+                            ?.toPersistentList())
+                    }
+                } else {
+                    val sortedList = filteredList?.sortedByDescending { it.price }
+                    setState {
+                        copy(filteredProductList = sortedList?.filter { it.weight.orZero() > getCurrentState().minWeight.orZero() && it.stock.orZero() > getCurrentState().minStock.orZero() }
+                            ?.toImmutableList())
+                    }
+                }
+            } else {
+                setState {
+                    val sortedList =
+                        filteredList?.filter { it.weight.orZero() > getCurrentState().minWeight.orZero() && it.stock.orZero() > getCurrentState().minStock.orZero() }
+                    copy(filteredProductList = sortedList?.toPersistentList())
+                }
+            }
+
+        }
+    }
+
+    private fun handleSorting() {
+        if (getCurrentState().sorting == null) {
+            setState {
+                copy(sorting = Sorting.ASCENDING)
+            }
+        } else {
+            if (getCurrentState().sorting == Sorting.ASCENDING) {
+                setState {
+                    copy(sorting = Sorting.DESCENDING)
+                }
+            } else {
+                setState {
+                    copy(sorting = Sorting.ASCENDING)
+                }
+            }
+        }
+    }
+
+    /*
+    private fun sortProductsByPriceAscending() {
+        viewModelScope.launch {
+            val sortedList =
+                getCurrentState().filteredProductList?.sortedBy { it.price }?.toImmutableList()
+            setState {
+                copy(filteredProductList = sortedList, sorting = Sorting.ASCENDING)
+            }
+        }
+    }
+
+    private fun sortProductsByPriceDescending() {
+        viewModelScope.launch {
+            val sortedList = getCurrentState().filteredProductList?.sortedByDescending { it.price }
+                ?.toImmutableList()
+            setState {
+                copy(filteredProductList = sortedList, sorting = Sorting.DESCENDING)
+            }
+        }
+    }
+
+    private fun filterWeight(minWeight: Int) {
+        viewModelScope.launch {
+            val sortedList =
+                getCurrentState().filteredProductList?.filter { it.weight.orZero() > minWeight }
+                    ?.toImmutableList()
+            setState {
+                copy(filteredProductList = sortedList, sorting = Sorting.DESCENDING)
+            }
+        }
+    }
+
+    private fun filterStock(minStock: Int) {
+        viewModelScope.launch {
+            val sortedList =
+                getCurrentState().filteredProductList?.filter { it.stock.orZero() > minStock }
+                    ?.toImmutableList()
+            setState {
+                copy(filteredProductList = sortedList, sorting = Sorting.DESCENDING)
+            }
+        }
+    } */
 }

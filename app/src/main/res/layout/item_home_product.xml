@@ -1,67 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-
         <variable
             name="product"
             type="com.mskinik.products.domain.model.Product" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:bind="http://schemas.android.com/tools"
-        android:padding="16dp"
-        android:background="@color/white">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp">
 
         <ImageView
             android:id="@+id/iv_product"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            bind:image="@{product.previewImage}"
-            bind:placeholder="@{@drawable/ic_broke_image}"
+            android:layout_marginEnd="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="16dp" />
+            bind:image="@{product.previewImage}"
+            bind:placeholder="@{@drawable/ic_broke_image}" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{product.title}"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="10dp"
+            android:text="@{product.title}"
             android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@id/iv_product"
-            app:layout_constraintTop_toTopOf="@id/iv_product"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/tv_price"
-            app:layout_constraintHorizontal_bias="0" />
+            app:layout_constraintStart_toEndOf="@id/iv_product"
+            app:layout_constraintTop_toTopOf="@id/iv_product" />
 
         <TextView
             android:id="@+id/tv_description"
             android:layout_width="0dp"
-            android:text="@{product.description}"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:text="@{product.description}"
             android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_name"
             app:layout_constraintStart_toStartOf="@id/tv_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_name"
-            app:layout_constraintEnd_toEndOf="@id/tv_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_stock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text='@{"Stock: "+String.valueOf(product.stock)}'
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/tv_name"
+            app:layout_constraintEnd_toEndOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+        <TextView
+            android:id="@+id/tv_weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text='@{"Weight: "+String.valueOf(product.weight)}'
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/tv_name"
+            app:layout_constraintEnd_toEndOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_stock"  />
 
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{String.valueOf(product.price) + " TL"}'            android:textSize="16sp"
-            android:textStyle="bold"
+            android:text='@{String.valueOf(product.price) + " TL"}'
             android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

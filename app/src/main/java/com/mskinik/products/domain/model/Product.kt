@@ -20,6 +20,7 @@ data class Product(
     val tags: List<String>?,
     val thumbnail: String?,
     val title: String?,
+    val weight: Int?,
 )
 
 fun Product.toFavorite(): FavoriteEntity = FavoriteEntity(

@@ -13,8 +13,6 @@ class FavoriteUseCase @Inject constructor(private val productRepository: Product
     suspend fun addFavorite(favoriteEntity: FavoriteEntity) =
         productRepository.setFavorite(favoriteEntity)
 
-    suspend fun getFavorites() = productRepository.getFavorites()
-
     suspend fun deleteFavorite(id: Int) = productRepository.deleteFavorite(id)
 
     suspend fun isFavorite(id: Int) = productRepository.isFavorite(id)

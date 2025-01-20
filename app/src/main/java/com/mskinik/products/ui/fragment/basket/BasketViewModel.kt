@@ -19,7 +19,7 @@ class BasketViewModel @Inject constructor(
     override fun handleEvents(event: BasketEvent) {
         when (event) {
             is BasketEvent.NavigateToCheckout -> {
-                // do nothing
+                setEffect { BasketEffect.NavigateToCheckout }
             }
 
             is BasketEvent.DeleteProductDetail -> {

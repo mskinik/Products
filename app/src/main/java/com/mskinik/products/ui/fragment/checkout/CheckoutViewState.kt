@@ -18,8 +18,10 @@ sealed interface CheckoutViewEvent : Event {
     data class OnMailTextChanged(val mail: String) : CheckoutViewEvent
     data class OnNameTextChanged(val name: String) : CheckoutViewEvent
     data object OnCheckoutClicked : CheckoutViewEvent
+    data object OnBackClicked : CheckoutViewEvent
 }
 
 sealed interface CheckoutViewEffect : Effect {
     data object NavigateToHome : CheckoutViewEffect
+    data object Back : CheckoutViewEffect
 }

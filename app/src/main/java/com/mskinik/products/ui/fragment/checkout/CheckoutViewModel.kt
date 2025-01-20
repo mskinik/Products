@@ -36,6 +36,10 @@ class CheckoutViewModel @Inject constructor(private val checkoutUseCase: Checkou
                     copy(nameText = event.name)
                 }
             }
+
+            is  CheckoutViewEvent.OnBackClicked -> {
+                setEffect { CheckoutViewEffect.Back }
+            }
         }
     }
 

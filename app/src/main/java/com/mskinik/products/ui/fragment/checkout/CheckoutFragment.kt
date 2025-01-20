@@ -36,6 +36,9 @@ class CheckoutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         collectState()
         collectEffect()
+        ivBack.setOnClickListener {
+            viewModel.setEvent(CheckoutViewEvent.OnBackClicked)
+        }
         etName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.setEvent(CheckoutViewEvent.OnNameTextChanged(s.toString()))
@@ -68,17 +71,23 @@ class CheckoutFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect {
-                    etName.setText(it.nameText)
-                    it.nameText?.let { text ->
-                        etName.setSelection(text.length)
+                    if (it.nameText != etName.text.toString()) {
+                        etName.setText(it.nameText)
+                        it.nameText?.let { text ->
+                            etName.setSelection(text.length)
+                        }
                     }
-                    etPhone.setText(it.phoneText)
-                    it.phoneText?.let { text ->
-                        etPhone.setSelection(text.length)
+                    if (it.phoneText != etPhone.text.toString()) {
+                        etPhone.setText(it.phoneText)
+                        it.phoneText?.let { text ->
+                            etPhone.setSelection(text.length)
+                        }
                     }
-                    etEmail.setText(it.mailText)
-                    it.mailText?.let { text ->
-                        etEmail.setSelection(text.length)
+                    if (it.mailText != etEmail.text.toString()) {
+                        etEmail.setText(it.mailText)
+                        it.mailText?.let { text ->
+                            etEmail.setSelection(text.length)
+                        }
                     }
                     button.isEnabled = it.isButtonEnable
                     button.setOnClickListener {
@@ -95,6 +104,10 @@ class CheckoutFragment : Fragment() {
                 viewModel.effect.collect { effect ->
                     when (effect) {
                         CheckoutViewEffect.NavigateToHome -> {
+                            findNavController().popBackStack()
+                        }
+
+                        CheckoutViewEffect.Back -> {
                             findNavController().popBackStack()
                         }
                     }

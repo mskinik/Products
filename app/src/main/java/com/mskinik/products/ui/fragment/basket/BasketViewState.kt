@@ -27,5 +27,5 @@ sealed interface BasketEvent : Event {
 }
 
 sealed interface BasketEffect : Effect {
-
+    data object NavigateToCheckout : BasketEffect
 }
