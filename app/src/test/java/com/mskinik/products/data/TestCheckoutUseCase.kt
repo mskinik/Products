@@ -1,5 +1,6 @@
 package com.mskinik.products.data
 
+import com.mskinik.products.domain.model.Checkout
 import com.mskinik.products.domain.model.ProductDetail
 
 class TestCheckoutUseCase {
@@ -7,7 +8,7 @@ class TestCheckoutUseCase {
         id = 1,
         title = "Product 1",
         price = 1.0,
-        image = "https://example.com/image1.jpg",
+        image = "",
         quantity = 1,
         desc = "",
         category = "",
@@ -19,7 +20,7 @@ class TestCheckoutUseCase {
             id = 2,
             title = "Product 2",
             price = 2.0,
-            image = "https://example.com/image2.jpg",
+            image = "",
             quantity = 2,
             desc = "",
             category = "",
@@ -29,11 +30,22 @@ class TestCheckoutUseCase {
             id = 3,
             title = "Product 3",
             price = 3.0,
-            image = "https://example.com/image3.jpg",
+            image = "",
             quantity = 3,
             desc = "",
             category = "",
             stock = 3
         )
     )
+    val testCheckout = Checkout(
+        id = 1,
+        title = "title",
+        price = 4.0,
+        image = "",
+        quantity = 2,
+        desc = "",
+        stock = 3
+    )
+
+    val testCheckoutList = listOf(testCheckout)
 }
